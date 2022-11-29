@@ -15,7 +15,6 @@ const getLatestNews = async() => { // async 비동기 선언
 
 getLatestNews();
 
-dddd
 let sideMenuBtn = document.getElementById("sideMenuBtn");
 let sideMenuClose = document.getElementById("sideMenuClose");
 let sideMenu = document.getElementById("sideMenu");
