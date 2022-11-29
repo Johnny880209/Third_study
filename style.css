@@ -1,0 +1,97 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700;900&display=swap');
+
+/* http://meyerweb.com/eric/tools/css/reset/
+v2.0 | 20110126
+License: none (public domain)
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+body {
+    line-height: 1.5;
+    font-size:16px;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+button {
+    background: none; border:0; 
+}
+
+header .top_menu {margin-top:10px; display: flex;}
+header .top_menu button {font-size:1.3rem;}
+
+.side_menu {position: fixed; top:0; left:-100%; width:30%; height:100%; z-index: 10; background-color: #f8f8f8; padding:50px; box-sizing: border-box; transition: all 0.3s;}
+.side_menu ul li {margin-bottom:15px;}
+.side_menu ul li button {font-size:0.9rem; width: 100%; text-align: left;}
+.side_menu ul li button:hover {font-weight:bold;}
+#sideMenuBtn {display:none;}
+#sideMenuClose {position:absolute; top:25px; right:25px;}
+
+.search_box {display: flex; width:0px; margin-left:20px; overflow: hidden; transition: all 0.3s;}
+.search_box input {width:200px; height:30px; border: 1px solid #ccc;}
+.search_box button {width:30px; height:30px; background: #333; color:#fff; font-size:0.7rem !important;}
+
+
+header .logo {margin:25px 0 15px; text-align: center;}
+header .logo svg {height:70px;}
+header .menu {margin-bottom:25px; padding:15px 0px; border-top:1px solid #ccc;  border-bottom: 4px double black;}
+header .menu ul {display:flex; flex-wrap:wrap; justify-content: center;}
+header .menu ul li {margin:0px 10px;}
+header .menu ul li button {font-size:0.9rem;box-sizing: border-box;}
+header .menu ul li button:hover {background-color: #f3f3f3;}
+
+.news_content {margin-bottom:50px;}
+
+.news_item {margin-bottom:25px; padding-bottom:25px; border-bottom:1px solid #000;}
+.news_item:last-child {border-bottom:0; margin-bottom:0; padding-bottom:0;}
+.news_item .img_box img {width:100%;}
+.news_item .text_box {padding:15px;}
+.news_item .text_box h3 {font-size:2rem; font-weight:700; margin-bottom:10px;}
+.news_item .text_box article {margin-bottom:30px;}
+.news_item .text_box span {font-size:0.9rem; color:#777;}
+
+footer {width:100%; background-color: #222; text-align: center;}
+footer p {color:#555; padding:10px; font-size: 0.8rem;}
+
+@media screen and (max-width: 1400px) {
+
+    header .menu {display:none;}
+    #sideMenuBtn {display:inline-block;}
+
+};
