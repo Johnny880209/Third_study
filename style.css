@@ -82,7 +82,7 @@ header .menu ul li button:hover {background-color: #f3f3f3;}
 .news_item:last-child {border-bottom:0; margin-bottom:0; padding-bottom:0;}
 .news_item .img_box img {width:100%;}
 .news_item .text_box {padding:15px;}
-.news_item .text_box h3 {font-size:2rem; font-weight:700; margin-bottom:10px;}
+.news_item .text_box h3 {font-size:1.8rem; font-weight:700; margin-bottom:10px;}
 .news_item .text_box article {margin-bottom:30px;}
 .news_item .text_box span {font-size:0.9rem; color:#777;}
 
