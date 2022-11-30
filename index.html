@@ -15,12 +15,12 @@
       <div class="container">
         <div class="top_menu">
             <div class="button_box">
-                <button id="sideMenuBtn" onkeydown="if(window.event.keyCode==13){getNewsByKeyword()}"><i class="xi-bars"></i></button>
+                <button id="sideMenuBtn"><i class="xi-bars"></i></button>
                 <button id="searchBoxBtn"><i class="xi-search"></i></button>
             </div>
             
             <div id="searchBox" class="search_box">
-                <input type="text" id="searchInput"/>
+                <input type="text" id="searchInput" onKeydown="if(window.event.keyCode==13){getNewsByKeyword()}"/>
                 <button id ="searchBtn"><i class="xi-search"></i></button>
             </div>
 
