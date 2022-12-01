@@ -1,66 +1,15 @@
 let news = [];
+let page = 1;
+let total_pages = 0;
 let menus = document.querySelectorAll(".menu ul li button");
+let sideMenuList = document.querySelectorAll(".side_menu ul li button");
 let sideMenuBtn = document.getElementById("sideMenuBtn");
 let sideMenuClose = document.getElementById("sideMenuClose");
 let sideMenu = document.getElementById("sideMenu");
 let searchBoxBtn = document.getElementById("searchBoxBtn");
 let searchBox = document.getElementById("searchBox");
 let searchBtn = document.getElementById("searchBtn");
-
-
-async function getNewsByKeyword() {
-    let searchText = document.getElementById("searchInput").value;
-
-    let url = new URL(`https://api.newscatcherapi.com/v2/search?q=${searchText}&page_size=10`);
-
-    let header = new Headers({ 'x-api-key': 'G1xMfUZIz4-Fr35spkw9_eziMI_VFVLxYPkKYcp5aKs' });
-
-    let response = await fetch(url, { headers: header });
-
-    let data = await response.json();
-
-    news = data.articles;
-
-    render();
-}
-
-
-menus.forEach((menu) => menu.addEventListener("click", (e)=>getNewsByTopic(e)));
-
-const getLatestNews = async() => { // async 비동기 선언
-    url = new URL('https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&topic=sport&page_size=10');
-    let header = new Headers({'x-api-key' : 'G1xMfUZIz4-Fr35spkw9_eziMI_VFVLxYPkKYcp5aKs'});
-
-    let response = await fetch(url,{headers:header}); // ajax, http, fetch 3가지 중 가능 (Promise는 데이터를 리턴해주는 객체, pending은 아직 데이터가 도착하지 않았다는 뜻, Response 데이터 도착)
-
-    let data = await response.json(); // json을 통해 서버에서 데이터를 뽑아내기
-
-    news = data.articles;
-
-    console.log(news);
-
-    render();
-}
-
-const getNewsByTopic = async(e) => {
-    let toPic = e.target.textContent.toLowerCase();
-
-    let url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&page_size=10?topic=${toPic}`);
-
-    let header = new Headers({'x-api-key' : 'G1xMfUZIz4-Fr35spkw9_eziMI_VFVLxYPkKYcp5aKs'});
-
-    let response = await fetch(url,{headers:header});
-
-    let data = await response.json();
-
-    news= data.articles;
-
-    render ();
-};
-
-getLatestNews();
-
-
+let url;
 
 sideMenuBtn.addEventListener('click', () => {
     sideMenu.style.left = 0 + '%';
@@ -78,6 +27,73 @@ searchBoxBtn.addEventListener('click', () => {
         searchBox.style.width = 0 + 'px';
     }
 });
+
+const getNews = async() => {
+
+    try {
+
+        let header = new Headers({ 'x-api-key': '6FigHN_l7E32POYazdC63Ot0yQh1tPngDZDfPKagksk' });
+
+        url.searchParams.set('page', page);
+
+        let response = await fetch(url, { headers: header });
+        let data = await response.json();
+
+        if (response.status == 200){
+
+            if (data.total_hits == 0){
+                throw new Error ("검색된 결과가 없습니다.");
+            };
+
+            news = data.articles;
+            total_pages = data.total_pages;
+            page = data.page;
+
+            render();
+            pagination();
+        } else {
+            throw new Error(data.message)
+        };
+
+    } catch(error){
+        errorRender(error.message);
+    }
+
+    
+}
+
+async function getNewsByKeyword() {
+    let searchText = document.getElementById("searchInput").value;
+
+    url = new URL(`https://api.newscatcherapi.com/v2/search?q=${searchText}&page_size=10`);
+
+    getNews();
+}
+
+menus.forEach((menu) => menu.addEventListener("click", (e)=>getNewsByTopic(e)));
+sideMenuList.forEach((sideMenuList) => sideMenuList.addEventListener("click", (e)=> {
+        getNewsByTopic(e);
+        sideMenu.style.left = "-" + 100 + '%';
+    }));
+
+const getLatestNews = async() => { // async 비동기 선언
+    url = new URL('https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&topic=sport&page_size=5');
+    
+    getNews();
+}
+
+const getNewsByTopic = async(e) => {
+    let toPic = e.target.textContent.toLowerCase();
+
+    url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&page_size=10?topic=${toPic}`);
+
+    getNews();
+};
+
+getLatestNews();
+
+
+
 
 
 function render(){
@@ -107,5 +123,66 @@ function render(){
     document.getElementById("newsList").innerHTML = resultHTML;
 };
 
+const errorRender = (message) => {
+    let errorHTML = `<div class="alert alert-danger" role="alert">${message}</div>`;
 
+    document.getElementById("newsList").innerHTML = errorHTML;
+}
+
+const pagination = () => {
+    let paginationHTML = "";
+
+    let pageGroup = Math.ceil(page/5);
+    let last = pageGroup * 5;
+    let first = last - 4 <= 0 ? 1 : last - 4;
+
+    if (last > total_pages) {
+        last = total_pages;
+    }
+
+    if (first >= 6){
+        paginationHTML = `
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next" onclick="moveToPage(1)">
+                <span aria-hidden="true">&lt;&lt;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Previous" onclick="moveToPage(${page - 1})">
+                <span aria-hidden="true">&lt;</span>
+                </a>
+            </li>
+        `;
+    };
+
+    for (let i=first; i<=last; i++){
+        paginationHTML += `<li class="page-item ${page == i ? "active" : ""}"><a class="page-link" href="#" onclick="moveToPage(${i})">${i}</a></li>`
+    };
+
+    if (last < total_pages){
+        paginationHTML += `
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next" onclick="moveToPage(${page + 1})">
+                <span aria-hidden="true">&gt;</span>
+                </a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Next" onclick="moveToPage(${total_pages})">
+                <span aria-hidden="true">&gt;&gt;</span>
+                </a>
+            </li>
+        `;
+    };
+
+    document.querySelector(".pagination").innerHTML = paginationHTML;
+};
+
+const moveToPage = (pageNumber) => {
+    page = pageNumber;
+
+    getNews();
+};
+
+
+ 
 searchBtn.addEventListener("click", getNewsByKeyword);

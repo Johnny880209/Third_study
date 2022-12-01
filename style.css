@@ -56,7 +56,7 @@ button {
 header .top_menu {margin-top:10px; display: flex;}
 header .top_menu button {font-size:1.3rem;}
 
-.side_menu {position: fixed; top:0; left:-100%; width:30%; height:100%; z-index: 10; background-color: #f8f8f8; padding:50px; box-sizing: border-box; transition: all 0.3s;}
+.side_menu {position: fixed; top:0; left:-100%; width:300px; height:100%; z-index: 10; background-color: #f8f8f8; padding:50px; box-sizing: border-box; transition: all 0.3s;}
 .side_menu ul li {margin-bottom:15px;}
 .side_menu ul li button {font-size:0.9rem; width: 100%; text-align: left;}
 .side_menu ul li button:hover {font-weight:bold;}
@@ -86,12 +86,20 @@ header .menu ul li button:hover {background-color: #f3f3f3;}
 .news_item .text_box article {margin-bottom:30px;}
 .news_item .text_box span {font-size:0.9rem; color:#777;}
 
+.alert {text-align: center;}
+.pagination {justify-content: center; margin-bottom:50px;}
+.pagination a {cursor:pointer;}
+
 footer {width:100%; background-color: #222; text-align: center;}
 footer p {color:#555; padding:10px; font-size: 0.8rem;}
 
 @media screen and (max-width: 1400px) {
 
+    body {font-size:14px;}
+
     header .menu {display:none;}
     #sideMenuBtn {display:inline-block;}
+
+    header .logo svg {height:30px;}
 
 };
